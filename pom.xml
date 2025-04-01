@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.pereiraesteban</groupId>
+    <groupId>fr.pereiraesteban.kata-foor-bar-quix</groupId>
     <artifactId>kata</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -22,5 +22,6 @@
     <modules>
         <module>kata-lib</module>
         <module>kata-api</module>
+        <module>kata-batch</module>
     </modules>
 </project>
