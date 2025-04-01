@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/kata/")
+@RequestMapping("/kata")
 public class Api {
 
   private final KataService kataService;
