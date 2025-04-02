@@ -3,6 +3,8 @@ package fr.pereiraesteban.kata_api;
 import fr.pereiraesteban.kata_api.response.ErrorResponse;
 import fr.pereiraesteban.kata_api.response.KataResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,6 +35,7 @@ public class Api {
       schema = @Schema(implementation = KataResponse.class)
     )
   )
+  @Parameter(in = ParameterIn.QUERY, name = "input", schema = @Schema(type = "string"), description = "A integer in range [0-100]")
   public ResponseEntity<KataResponse> kata(@RequestParam @NotNull Integer input) {
     if (input < 0 || input > 100) {
       throw new InvalidInputRangeException(input + " is not in [0, 100]");
