@@ -11,8 +11,8 @@ public final class Kata {
   }
 
   public static class Builder {
-    private final ArrayList<TransformationRule> numberRules = new ArrayList<>();
-    private final ArrayList<TransformationRule> digitRules = new ArrayList<>();
+    private final ArrayList<TransformationRule<Integer, String>> numberRules = new ArrayList<>();
+    private final ArrayList<TransformationRule<Integer, String>> digitRules = new ArrayList<>();
     private Function<Integer, String> defaultBehavior;
 
     private Builder() {
@@ -23,7 +23,7 @@ public final class Kata {
       Objects.requireNonNull(matchOn);
       Objects.requireNonNull(transformation);
 
-      var rule = new TransformationRule(matchOn, transformation);
+      var rule = new TransformationRule<>(matchOn, transformation);
       numberRules.add(rule);
       return this;
     }
@@ -32,7 +32,7 @@ public final class Kata {
       Objects.requireNonNull(matchOn);
       Objects.requireNonNull(transformation);
 
-      var rule = new TransformationRule(matchOn, transformation);
+      var rule = new TransformationRule<>(matchOn, transformation);
       digitRules.add(rule);
       return this;
     }
@@ -47,13 +47,13 @@ public final class Kata {
     }
   }
 
-  private final ArrayList<TransformationRule> numberRules;
-  private final ArrayList<TransformationRule> digitRules;
+  private final ArrayList<TransformationRule<Integer, String>> numberRules;
+  private final ArrayList<TransformationRule<Integer, String>> digitRules;
   private final Function<Integer, String> defaultBehavior;
 
   private Kata(
-      ArrayList<TransformationRule> numberRules,
-      ArrayList<TransformationRule> digitRules,
+      ArrayList<TransformationRule<Integer, String>> numberRules,
+      ArrayList<TransformationRule<Integer, String>> digitRules,
       Function<Integer, String> defaultBehavior
   ) {
     this.numberRules = numberRules;
