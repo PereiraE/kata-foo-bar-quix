@@ -17,11 +17,11 @@ public final class Kata {
       //Hide default constructor
     }
 
-    public Builder registerNumberRule(Predicate<Integer> matchOn, String matchingValue) {
+    public Builder registerNumberRule(Predicate<Integer> matchOn, Function<Integer, String> transformation) {
       Objects.requireNonNull(matchOn);
-      Objects.requireNonNull(matchingValue);
+      Objects.requireNonNull(transformation);
 
-      var rule = new TransformationRule(matchOn, (__ -> matchingValue));
+      var rule = new TransformationRule(matchOn, transformation);
       numberRules.add(rule);
       return this;
     }
