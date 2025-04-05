@@ -20,7 +20,7 @@ class TestKata {
 
   @Test
   void testNoRulesMatchReturnsInputAsString() {
-    var kata = Kata.builder().build();
+    var kata = Kata.builder().registerDefaultBehavior(Object::toString).build();
     assertEquals("1", kata.transform(1));
     assertEquals("2", kata.transform(2));
   }
@@ -72,6 +72,7 @@ class TestKata {
         .registerDigitRule(c -> c == '3', __ -> "FOO")
         .registerDigitRule(c -> c == '5', __ -> "BAR")
         .registerDigitRule(c -> c == '7', __ -> "QUIX")
+        .registerDefaultBehavior(Object::toString)
         .build();
 
     assertEquals(expectedResult, kata.transform(input));

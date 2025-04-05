@@ -14,6 +14,7 @@ public class KataService {
         .registerDigitRule(c -> c == '3', __ -> "FOO")
         .registerDigitRule(c -> c == '5', __ -> "BAR")
         .registerDigitRule(c -> c == '7', __ -> "QUIX")
+        .registerDefaultBehavior(Object::toString)
         .build();
   }
 
