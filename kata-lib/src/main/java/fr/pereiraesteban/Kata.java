@@ -13,6 +13,8 @@ public final class Kata {
   public static class Builder {
     private final ArrayList<TransformationRule> numberRules = new ArrayList<>();
     private final ArrayList<TransformationRule> digitRules = new ArrayList<>();
+    private Function<Integer, String> defaultBehavior;
+
     private Builder() {
       //Hide default constructor
     }
@@ -35,17 +37,28 @@ public final class Kata {
       return this;
     }
 
+    public Builder registerDefaultBehavior(Function<Integer, String> defaultBehavior) {
+      this.defaultBehavior = Objects.requireNonNull(defaultBehavior);
+      return this;
+    }
+
     public Kata build() {
-      return new Kata(numberRules, digitRules);
+      return new Kata(numberRules, digitRules, defaultBehavior);
     }
   }
 
   private final ArrayList<TransformationRule> numberRules;
   private final ArrayList<TransformationRule> digitRules;
+  private final Function<Integer, String> defaultBehavior;
 
-  private Kata(ArrayList<TransformationRule> numberRules, ArrayList<TransformationRule> digitRules) {
+  private Kata(
+      ArrayList<TransformationRule> numberRules,
+      ArrayList<TransformationRule> digitRules,
+      Function<Integer, String> defaultBehavior
+  ) {
     this.numberRules = numberRules;
     this.digitRules = digitRules;
+    this.defaultBehavior = defaultBehavior;
   }
 
   public String transform(int input) {
@@ -56,8 +69,9 @@ public final class Kata {
     applyNumberRules(sb, input);
     applyDigitRules(sb, input);
 
-    if (sb.isEmpty()) {
-      sb.append(input);
+    if (sb.isEmpty() && defaultBehavior != null) {
+      var defaultValue = defaultBehavior.apply(input);
+      sb.append(defaultValue);
     }
 
     return sb.toString();
