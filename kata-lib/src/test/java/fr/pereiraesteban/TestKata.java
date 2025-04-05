@@ -28,7 +28,7 @@ class TestKata {
   @Test
   void testInputDivisibleBy3ReturnsFoo() {
     var kata = Kata.builder()
-        .registerNumberRule(input -> (input % 3) == 0, "FOO")
+        .registerNumberRule(input -> (input % 3) == 0, __ -> "FOO")
         .build();
     assertEquals("FOO", kata.transform(12));
     assertEquals("FOO", kata.transform(9));
@@ -37,7 +37,7 @@ class TestKata {
   @Test
   void testInputDivisibleBy5ReturnsBar() {
     var kata = Kata.builder()
-        .registerNumberRule(input -> (input % 5) == 0, "BAR")
+        .registerNumberRule(input -> (input % 5) == 0, __ -> "BAR")
         .build();
     assertEquals("BAR", kata.transform(20));
     assertEquals("BAR", kata.transform(25));
@@ -67,8 +67,8 @@ class TestKata {
   @FieldSource("arguments")
   void testNumberRuleAndDigitRuleMatch(String expectedResult, int input) {
     var kata = Kata.builder()
-        .registerNumberRule(i -> (i % 3) == 0, "FOO")
-        .registerNumberRule(i -> (i % 5) == 0, "BAR")
+        .registerNumberRule(i -> (i % 3) == 0, __ -> "FOO")
+        .registerNumberRule(i -> (i % 5) == 0, __ -> "BAR")
         .registerDigitRule(c -> c == '3', __ -> "FOO")
         .registerDigitRule(c -> c == '5', __ -> "BAR")
         .registerDigitRule(c -> c == '7', __ -> "QUIX")
