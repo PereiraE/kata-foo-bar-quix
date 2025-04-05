@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public final class Kata {
   public static Builder builder() {
@@ -66,8 +67,15 @@ public final class Kata {
       throw new IllegalArgumentException("Invalid range (range is [0-100]");
     }
     var sb = new StringBuilder();
-    applyNumberRules(sb, input);
-    applyDigitRules(sb, input);
+
+    numberRules.stream().filter(r -> r.canMap(input)).map(r -> r.map(input)).forEach(sb::append);
+    var inputAsString = input + "";
+    inputAsString.chars()
+        .mapToObj(c -> digitRules.stream()
+            .filter(r -> r.canMap(c))
+            .map(r -> r.map(input))
+            .collect(Collectors.joining()))
+        .forEach(sb::append);
 
     if (sb.isEmpty() && defaultBehavior != null) {
       var defaultValue = defaultBehavior.apply(input);
@@ -75,25 +83,5 @@ public final class Kata {
     }
 
     return sb.toString();
-  }
-
-  private void applyNumberRules(StringBuilder sb, int input) {
-    for (var rule : numberRules) {
-      if (rule.canMap(input)) {
-        var value = rule.map(input);
-        sb.append(value);
-      }
-    }
-  }
-
-  private void applyDigitRules(StringBuilder sb, int input) {
-    var inputAsString = input + "";
-    for (var character : inputAsString.chars().toArray()) {
-      for (var rule : digitRules) {
-        if (rule.canMap(character)) {
-          sb.append(rule.map(character));
-        }
-      }
-    }
   }
 }
